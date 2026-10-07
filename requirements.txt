@@ -1,0 +1,13 @@
+numpy
+pandas
+scikit-learn
+xgboost
+lifelines
+joblib
+gymnasium
+fastapi
+uvicorn
+python-multipart
+python-dotenv
+google-genai
+pydantic

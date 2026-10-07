@@ -1,0 +1,15 @@
+numpy
+pandas
+torch
+torchvision
+opencv-python
+pillow
+scikit-learn
+xgboost
+lifelines
+joblib
+gymnasium
+stable-baselines3
+fastapi
+uvicorn
+python-multipart
