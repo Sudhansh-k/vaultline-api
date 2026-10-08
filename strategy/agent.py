@@ -60,17 +60,17 @@ def generate_quotes(fair_value, days_to_sell, current_inventory, capital=START_C
     if _model is not None:
         obs = make_obs(current_inventory, capital, fair_value, days_to_sell)
         a, _ = _model.predict(obs, deterministic=True)
-        sb, sa = spreads_from_action(a)
+        sb, sa = (float(x) for x in spreads_from_action(a))
     else:  # widen with inventory, scarce capital, slow-moving items
         inv, cap = current_inventory / MAX_INVENTORY, capital / START_CAPITAL
         sb = float(np.clip(0.10 + 0.20 * inv + 0.10 * (1 - cap) + 0.05 * days_to_sell / 60, 0.01, 0.40))
         sa = float(np.clip(0.05 + 0.10 * inv + 0.05 * days_to_sell / 60, 0.01, 0.40))
 
-    bid, ask = fair_value * (1 - sb), fair_value * (1 + sa)
+    bid, ask = float(fair_value) * (1 - sb), float(fair_value) * (1 + sa)
     if current_inventory >= MAX_INVENTORY or capital < bid:
-        return 0.0, round(ask, 2), "STOP_BUYING"           # no room or no cash: only list/sell
+        return 0.0, round(float(ask), 2), "STOP_BUYING"
     label = "NARROW" if (sb + sa) / 2 < 0.12 else "WIDE" if (sb + sa) / 2 > 0.25 else "NORMAL"
-    return round(bid, 2), round(ask, 2), label
+    return round(float(bid), 2), round(float(ask), 2), label
 
 
 if __name__ == "__main__":

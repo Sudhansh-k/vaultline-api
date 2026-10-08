@@ -9,5 +9,5 @@ def instant_offer(item_id, image_bytes, current_inventory, capital):
     val = appraise_item(item_id, cv["condition_score"])
     bid, ask, action = generate_quotes(val["fair_market_value"], val["expected_days_to_sell"],
                                        current_inventory, capital)
-    return {"offer_to_customer": bid, "list_price": ask, "action": action,
+    return {"offer_to_customer": float(bid), "list_price": float(ask), "action": str(action),
             "condition": cv, "valuation": val}
