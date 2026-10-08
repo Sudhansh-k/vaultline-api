@@ -19,7 +19,6 @@ def items():
     with connect() as c:
         return [r[0] for r in c.execute("SELECT DISTINCT item_id FROM listings")]
 
-
 @app.post("/offer")
 async def offer(item_id: str = Form(...), image: UploadFile = File(...)):
     try:
@@ -27,6 +26,9 @@ async def offer(item_id: str = Form(...), image: UploadFile = File(...)):
                              STATE["inventory"].get(item_id, 0), STATE["capital"])
     except ValueError as e:
         raise HTTPException(400, str(e))
+    except Exception as e:
+        print("offer failed:", e)
+        raise HTTPException(503, "The vision service is busy right now. Please try again in a moment.")
 
 
 @app.post("/accept")
